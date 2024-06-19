@@ -38,6 +38,7 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * Manages test execution for the entire run.
@@ -279,7 +280,7 @@ public class TestExecutor {
                 command.addAll(OSSupport.getJavaInvokeArguments());
 
                 // jvm args
-                command.addAll(task.jvmArgs);
+                command.addAll(task.jvmArgs.stream().filter(s -> !s.startsWith("-agentlib")).collect(Collectors.toList()));
 
                 if (VMSupport.compilerDirectivesAvailable()) {
                     command.add("-XX:CompilerDirectivesFile=" + compilerDirectives.getAbsolutePath());

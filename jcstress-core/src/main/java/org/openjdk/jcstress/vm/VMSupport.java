@@ -461,6 +461,7 @@ public class VMSupport {
 
         for (Config config : configs) {
             List<String> args = config.origArgs();
+            args = args.stream().filter(s -> !s.startsWith("-agentlib")).collect(Collectors.toList());
             try {
                 List<String> line = new ArrayList<>(args);
                 line.add(SimpleTestMain.class.getName());
